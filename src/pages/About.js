@@ -10,7 +10,7 @@ function About() {
     const [coronaData, setItems] = useState({});
 
     async function stats(){
-        const resp = await fetch('https://corona.lmao.ninja/all');
+        const resp = await fetch('https://corona.lmao.ninja/v2/all');
         const data = await resp.json();
         console.log(data);
         setItems(data);

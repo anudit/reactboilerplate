@@ -1,46 +1,64 @@
-import React from 'react';
-
+import React, { useState, useContext, useEffect } from 'react'
 import {TODO_LIST_ADDRESS, TODO_LIST_ABI} from '../contractData'
-import getWeb3 from "../web3Helper";
+// import getWeb3Setup from '../web3Helper'
 import '../App.css';
 
-class Home extends React.Component {
+import Web3 from "web3";
+import Web3Modal from "web3modal";
+import WalletConnectProvider from "@walletconnect/web3-provider";
+import Torus from "@toruslabs/torus-embed";
 
-  state = { storageValue: 0, web3: null, accounts: [], contract: null };
 
-  componentDidMount = async () => {
-    // Setup Web3 on page
-    const web3 = await getWeb3();
-    const accounts = await web3.eth.getAccounts();
-    const instance = new web3.eth.Contract(
-      TODO_LIST_ABI,
-      TODO_LIST_ADDRESS,
-    );
+export default function Home () {
 
-    this.setState({ web3, accounts, contract: instance })
-    this.runExample();
+  const [getWeb3, setWeb3] = useState({})
+  const providerOptions = {
+    walletconnect: {
+      package: WalletConnectProvider,
+      options: {
+        rpc: {
+          16110: "https://betav2.matic.network"
+        }
+      }
+    },
+    torus: {
+      package: Torus,
+      options: {
+        networkParams: {
+          host: "https://betav2.matic.network",
+          chainId: 16110,
+          networkId: 16110
+        },
+        config: {
+          buildEnv: "development"
+        }
+      }
+    }
   };
 
-  runExample = async () => {
-    const { contract } = this.state;
+  const web3Modal = new Web3Modal({
+    cacheProvider: false,
+    providerOptions
+  });
 
-    // Stores a given value, 5 by default.
-    // await contract.methods.set(5).send({ from: accounts[0] });
+  useEffect(() => {
 
-    // Get the value from the contract to prove it worked.
-    const response = await contract.methods.taskCount().call();
+  }, []);
 
-    // Update state with the result.
-    this.setState({ storageValue: response });
-  };
-
-  render() {
-    return (<div>
-        <h1>Site is Up <span role="img" aria-label='rocket'>🚀</span></h1>
-    <p>Hi {this.state.accounts[0]}</p>
-        <div>The stored value is: {this.state.storageValue}</div>
-      </div>)
+  async function setupLogin(){
+    let provider = await web3Modal.connect()
+    let w3 = new Web3(provider)
+    setWeb3(w3)
+    console.log(web3Modal)
+    console.log(w3)
   }
-}
 
-export default Home;
+  return (
+    <div>
+      <p>Acc: {getWeb3.selectedAddress}</p>
+      <button onClick={setupLogin}>
+        {getWeb3.currentProvider != null ? 'Logged In' : 'Login'}
+      </button>
+    </div>
+    )
+}

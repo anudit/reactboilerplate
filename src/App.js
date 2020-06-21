@@ -1,12 +1,12 @@
 import React from 'react';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 import './App.css';
 
 import Nav from './pages/components/Nav';
-
 import Home from './pages/Home';
 import About from './pages/About';
+
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 function App() {
   return (
