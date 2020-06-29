@@ -1,19 +1,17 @@
 import React, { useState } from 'react'
-
-import './App.css';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 import Nav from './pages/components/Nav';
 import Home from './pages/Home';
 import About from './pages/About';
-
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 import Web3 from "web3";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import Torus from "@toruslabs/torus-embed";
 
-import Web3context from './contexts/Web3context.js'
+import Web3context from './contexts/Web3context.js';
+import Themecontext from './contexts/ThemeContext.js'
 
 function App() {
 
@@ -61,27 +59,30 @@ function App() {
     setWeb3(undefined)
   }
 
-  async function isLogin(){
-    if (getWeb3 === undefined){
-      return false;
-    }
-    else{
-      return true;
-    }
+  function trimAdd(add = "0x00", l = 3){
+    return String(add).slice(0,2) + String(add).slice(2,2+l) + "..." + String(add).slice(add.length-l,add.length)
+  }
+
+  const [isDark, setTheme] = useState(true)
+
+  function toggleTheme () {
+    setTheme(!isDark)
   }
 
   return (
-    <Router>
-      <div className="App">
-        <Nav/>
-        <Web3context.Provider value={{getWeb3, loginWeb3, logoutWeb3, isLogin}}>
-          <Switch>
-            <Route path="/" component={Home} />
-            <Route path="/about" component={About} />
-          </Switch>
-        </Web3context.Provider>
-      </div>
-    </Router>
+    <Web3context.Provider value={{getWeb3, loginWeb3, logoutWeb3, trimAdd}}>
+      <Themecontext.Provider value={{isDark, toggleTheme}}>
+        <Router>
+          <div className={isDark === true ? 'bp3-dark' :''}>
+            <Nav/>
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/about" component={About} />
+            </Switch>
+          </div>
+        </Router>
+      </Themecontext.Provider>
+    </Web3context.Provider>
   );
 }
 

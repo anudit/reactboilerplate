@@ -1,20 +1,62 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
-import '../../App.css';
+import React, { useContext, useEffect } from 'react'
+import Web3context from '../../contexts/Web3context.js'
+import Themecontext from '../../contexts/ThemeContext.js'
+
+import { Link } from 'react-router-dom';
+
+import {
+  Alignment,
+  Button,
+  ButtonGroup,
+  Navbar,
+  Classes,
+  NavbarDivider,
+  NavbarGroup,
+  NavbarHeading
+} from "@blueprintjs/core";
+
 
 function Nav() {
+
+  const web3context = useContext(Web3context)
+  let {getWeb3, logoutWeb3, loginWeb3, trimAdd} = web3context;
+  const themecontext = useContext(Themecontext)
+  let {isDark, toggleTheme} = themecontext;
+
+  useEffect(()=>{
+
+  }, [])
+
   return (
-    <nav>
-      <h3>Logo</h3>
-      <ul className="nav-links">
-          <Link to='/'>
-            <li>Home</li>
+    <>
+      <Navbar className={isDark === true ? 'bp3-dark' :''}>
+        <NavbarGroup>
+          <NavbarHeading>Web3 Boilerplate</NavbarHeading>
+          <NavbarDivider />
+          <Link className={[Classes.BUTTON, Classes.MINIMAL].join(" ")} to="/">
+            Home
           </Link>
-          <Link to='/about'>
-            <li>About</li>
+          <Link className={[Classes.BUTTON, Classes.MINIMAL].join(" ")} to="/about">
+            About
           </Link>
-      </ul>
-    </nav>
+        </NavbarGroup>
+        <NavbarGroup align={Alignment.RIGHT}>
+          <ButtonGroup>
+            {getWeb3 !== undefined
+              ?
+                <>
+                  <Button icon="tick-circle">Acc: {trimAdd(getWeb3.currentProvider.selectedAddress)}</Button>
+                  <Button  onClick={logoutWeb3} icon="log-out" text="Log Out" />
+                </>
+              :
+                <Button onClick={loginWeb3} icon="log-in" text="Log In" />
+            }
+            <Button icon={isDark===true ? 'flash':'moon'} onClick={toggleTheme}></Button>
+          </ButtonGroup>
+        </NavbarGroup>
+
+      </Navbar>
+    </>
   );
 }
 
