@@ -15,7 +15,7 @@ import {
   NavbarHeading
 } from "@blueprintjs/core";
 
-import { Menu, MenuDivider, MenuItem, Popover, Position } from "@blueprintjs/core";
+import { Menu, MenuItem, Popover, Position } from "@blueprintjs/core";
 
 function Nav() {
 
