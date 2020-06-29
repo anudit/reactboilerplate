@@ -15,6 +15,7 @@ import {
   NavbarHeading
 } from "@blueprintjs/core";
 
+import { Menu, MenuDivider, MenuItem, Popover, Position } from "@blueprintjs/core";
 
 function Nav() {
 
@@ -26,6 +27,20 @@ function Nav() {
   useEffect(()=>{
 
   }, [])
+
+  const exampleMenu = (
+    <>
+    {getWeb3 !== undefined
+      ?
+      <Menu>
+          <MenuItem icon="tick-circle" text={trimAdd(getWeb3.currentProvider.selectedAddress)} />
+          <MenuItem onClick={logoutWeb3} icon="log-out" text="Log Out" />
+      </Menu>
+      : <></>
+    }
+    </>
+);
+
 
   return (
     <>
@@ -39,15 +54,15 @@ function Nav() {
           <Link className={[Classes.BUTTON, Classes.MINIMAL].join(" ")} to="/about">
             About
           </Link>
+
         </NavbarGroup>
         <NavbarGroup align={Alignment.RIGHT}>
           <ButtonGroup>
             {getWeb3 !== undefined
               ?
-                <>
-                  <Button icon="tick-circle">Acc: {trimAdd(getWeb3.currentProvider.selectedAddress)}</Button>
-                  <Button  onClick={logoutWeb3} icon="log-out" text="Log Out" />
-                </>
+                <Popover content={exampleMenu} position={Position.BOTTOM}>
+                    <Button icon="user" text="My Account" />
+                </Popover>
               :
                 <Button onClick={loginWeb3} icon="log-in" text="Log In" />
             }

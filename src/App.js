@@ -59,7 +59,7 @@ function App() {
     setWeb3(undefined)
   }
 
-  function trimAdd(add = "0x00", l = 3){
+  function trimAdd(add = "0x00", l = 5){
     return String(add).slice(0,2) + String(add).slice(2,2+l) + "..." + String(add).slice(add.length-l,add.length)
   }
 
