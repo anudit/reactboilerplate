@@ -1,16 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import './index.css';
-import '../node_modules/normalize.css/normalize.css';
-import '../node_modules/normalize.css/normalize.css';
-import '../node_modules/@blueprintjs/icons/lib/css/blueprint-icons.css';
-import '../node_modules/@blueprintjs/core/lib/css/blueprint.css';
+import { Helmet } from "react-helmet";
+
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import '../node_modules/bootstrap/dist/js/bootstrap.bundle.js';
+import '../node_modules/font-awesome/css/font-awesome.min.css'
 
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
+    <Helmet>
+      <meta charSet={"utf-8"}/>
+      <meta name="viewport" content="width=device-width, initial-scale=1"/>
+      <title>Web3 Boilerplate</title>
+    </Helmet>
     <App />
   </React.StrictMode>,
   document.getElementById('root')

@@ -13,6 +13,9 @@ import Torus from "@toruslabs/torus-embed";
 import Web3context from './contexts/Web3context.js';
 import Themecontext from './contexts/ThemeContext.js'
 
+
+
+
 function App() {
 
   const [getWeb3, setWeb3] = useState(undefined)
@@ -73,7 +76,7 @@ function App() {
     <Web3context.Provider value={{getWeb3, loginWeb3, logoutWeb3, trimAdd}}>
       <Themecontext.Provider value={{isDark, toggleTheme}}>
         <Router>
-          <div className={isDark === true ? 'bp3-dark' :''}>
+          <div className={isDark === true ? 'bg-dark' :''}>
             <Nav/>
             <Switch>
               <Route exact path="/" component={Home} />

@@ -4,19 +4,6 @@ import Themecontext from '../../contexts/ThemeContext.js'
 
 import { Link } from 'react-router-dom';
 
-import {
-  Alignment,
-  Button,
-  ButtonGroup,
-  Navbar,
-  Classes,
-  NavbarDivider,
-  NavbarGroup,
-  NavbarHeading
-} from "@blueprintjs/core";
-
-import { Menu, MenuItem, Popover, Position } from "@blueprintjs/core";
-
 function Nav() {
 
   const web3context = useContext(Web3context)
@@ -28,49 +15,52 @@ function Nav() {
 
   }, [])
 
-  const exampleMenu = (
-    <>
-    {getWeb3 !== undefined
-      ?
-      <Menu>
-          <MenuItem icon="tick-circle" text={trimAdd(getWeb3.currentProvider.selectedAddress)} />
-          <MenuItem onClick={logoutWeb3} icon="log-out" text="Log Out" />
-      </Menu>
-      : <></>
-    }
-    </>
-);
-
-
   return (
     <>
-      <Navbar className={isDark === true ? 'bp3-dark' :''}>
-        <NavbarGroup>
-          <NavbarHeading>Web3 Boilerplate</NavbarHeading>
-          <NavbarDivider />
-          <Link className={[Classes.BUTTON, Classes.MINIMAL].join(" ")} to="/">
-            Home
-          </Link>
-          <Link className={[Classes.BUTTON, Classes.MINIMAL].join(" ")} to="/about">
-            About
-          </Link>
+      <nav className={isDark === true? "navbar navbar-expand-md navbar-dark" : "navbar navbar-expand-md navbar-light"} >
+        <div className={"container-fluid"}>
+          <div className={"navbar-brand"} href="#">Web3 Boilerplate</div>
+          <button className={"navbar-toggler"} type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span className={"navbar-toggler-icon"}></span>
+          </button>
+          <div className={"collapse navbar-collapse"} id="navbarTogglerDemo02">
+            <ul className={"navbar-nav mr-auto mb-2 mb-lg-0"}>
+              <li className={"nav-item"}>
+                <Link className={"nav-link active"} to="/">
+                  Home
+                </Link>
+              </li>
+              <li className={"nav-item"}>
+                <Link className={"nav-link"} to="/about">
+                  About
+                </Link>
+              </li>
 
-        </NavbarGroup>
-        <NavbarGroup align={Alignment.RIGHT}>
-          <ButtonGroup>
-            {getWeb3 !== undefined
-              ?
-                <Popover content={exampleMenu} position={Position.BOTTOM}>
-                    <Button icon="user" text="My Account" />
-                </Popover>
-              :
-                <Button onClick={loginWeb3} icon="log-in" text="Log In" />
-            }
-            <Button icon={isDark===true ? 'flash':'moon'} onClick={toggleTheme}></Button>
-          </ButtonGroup>
-        </NavbarGroup>
+            </ul>
 
-      </Navbar>
+            <div className={"d-flex"}>
+              <div className={"btn-group"} role="group">
+
+                  {getWeb3 !== undefined
+                    ?
+                      <div className={"btn-group"} role="group">
+                        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                          My Account
+                        </button>
+                        <ul className={"dropdown-menu"} aria-labelledby="btnGroupDrop1">
+                            <li className={"dropdown-item"}> {trimAdd(getWeb3.currentProvider.selectedAddress)}</li>
+                            <li className={"dropdown-item"} onClick={logoutWeb3} >Logout</li>
+                        </ul>
+                      </div>
+                    :
+                      <button className={"btn btn-primary"} onClick={loginWeb3} ><i className={"fa fa-sign-in"}></i> Login</button>
+                  }
+                  <button className={"btn btn-primary"} onClick={toggleTheme} ><i className={isDark === true? "fa fa-moon-o" : "fa fa-sun-o"}></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
     </>
   );
 }
