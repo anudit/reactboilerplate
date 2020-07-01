@@ -17,7 +17,7 @@ function Nav() {
 
   return (
     <>
-      <nav className={isDark === true? "navbar navbar-expand-md navbar-dark" : "navbar navbar-expand-md navbar-light"} >
+      <nav className={isDark === true? "navbar navbar-expand-md bg-dark navbar-dark" : "navbar navbar-expand-md navbar-light"} >
         <div className={"container-fluid"}>
           <div className={"navbar-brand"} href="#">Web3 Boilerplate</div>
           <button className={"navbar-toggler"} type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
