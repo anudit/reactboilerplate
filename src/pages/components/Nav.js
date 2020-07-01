@@ -12,11 +12,10 @@ function Nav() {
   let {isDark, toggleTheme} = themecontext;
 
   useEffect(()=>{
-
   }, [])
 
   return (
-    <>
+    <header>
       <nav className={isDark === true? "navbar navbar-expand-md bg-dark navbar-dark" : "navbar navbar-expand-md navbar-light"} >
         <div className={"container-fluid"}>
           <div className={"navbar-brand"} href="#">Web3 Boilerplate</div>
@@ -61,7 +60,7 @@ function Nav() {
           </div>
         </div>
       </nav>
-    </>
+    </header>
   );
 }
 

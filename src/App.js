@@ -76,7 +76,7 @@ function App() {
     <Web3context.Provider value={{getWeb3, loginWeb3, logoutWeb3, trimAdd}}>
       <Themecontext.Provider value={{isDark, toggleTheme}}>
         <Router>
-          <div className={isDark === true ? 'text-light' :'text-dark'}>
+          <div className={isDark === true ? 'bg-dark text-light' :'bg-light text-dark'}>
             <Nav/>
             <Switch>
               <Route exact path="/" component={Home} />
